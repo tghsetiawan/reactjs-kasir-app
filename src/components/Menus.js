@@ -3,7 +3,7 @@ import { Card, Col } from "react-bootstrap";
 import {numberWithCommas} from '../utils/utils'
 
 const Menus = ({ menu }) => {
-  console.log(menu);
+  // console.log(menu);
   return (
       <Col md={4} xs={6} className="mb-4">
         <Card className="shadow">
