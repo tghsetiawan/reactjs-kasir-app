@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Public Sans', sans-serif;
+  font-family: "Public Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -9,16 +9,30 @@ body {
   background-color: #22668a;
 }
 
-.category-aktif{
+.category-aktif {
   background-color: #22668a;
   color: white;
 }
 
-.btn-primary{
+.btn-primary {
   background-color: #22668a;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.overflow-auto::-webkit-scrollbar {
+  display: none;
+}
+
+@media only screen and (max-height: 1000px) {
+  .hasil {
+    max-height: 650px;
+  }
+
+  .menu{
+    max-height: 800px;
+  }
 }

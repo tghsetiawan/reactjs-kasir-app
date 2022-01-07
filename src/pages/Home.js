@@ -28,6 +28,10 @@ export default class App extends Component {
         console.log(error);
       });
 
+    this.getListKeranjang();
+  }
+
+  getListKeranjang = () => {
     axios
       .get(API_URL + "keranjangs")
       .then((res) => {
@@ -37,21 +41,7 @@ export default class App extends Component {
       .catch((error) => {
         console.log(error);
       });
-  }
-
-  componentDidUpdate(prevState) {
-    if (prevState.keranjangs !== this.state.keranjangs) {
-      axios
-        .get(API_URL + "keranjangs")
-        .then((res) => {
-          const keranjangs = res.data;
-          this.setState({ keranjangs });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }
+  };
 
   changeCategori = (value) => {
     this.setState({
@@ -84,6 +74,7 @@ export default class App extends Component {
           axios
             .post(API_URL + "keranjangs", keranjang)
             .then((res) => {
+              this.getListKeranjang();
               swal({
                 title: "Sukses Masuk Keranjang",
                 text: keranjang.product.nama + " Berhasil Ditambahkan",
@@ -95,7 +86,9 @@ export default class App extends Component {
             .catch((error) => {
               console.log(error);
             });
-        } else {
+        } 
+
+        else {
           const keranjang = {
             jumlah: res.data[0].jumlah + 1,
             total_harga: res.data[0].total_harga + value.harga,
@@ -105,6 +98,7 @@ export default class App extends Component {
           axios
             .put(API_URL + "keranjangs/" + res.data[0].id, keranjang)
             .then((res) => {
+              this.getListKeranjang();
               swal({
                 title: "Sukses Masuk Keranjang",
                 text: keranjang.product.nama + " Berhasil Ditambahkan",
@@ -125,7 +119,9 @@ export default class App extends Component {
 
   render() {
     const { menus, pilihCategori, keranjangs } = this.state;
-    console.log(keranjangs);
+    // console.log(keranjangs);
+    console.log("props Home");
+    console.log(this.props);
     return (
       <div className="mt-3">
         <Container fluid>
@@ -135,11 +131,11 @@ export default class App extends Component {
               pilihCategori={pilihCategori}
             />
             <Col>
-              <h4>
+              <h4 className="mt-3">
                 <strong>Daftar Produk</strong>
               </h4>
               <hr />
-              <Row>
+              <Row className="overflow-auto menu">
                 {menus &&
                   menus.map((menu) => (
                     // <h2>{menu.nama}</h2>
@@ -151,7 +147,7 @@ export default class App extends Component {
                   ))}
               </Row>
             </Col>
-            <Hasil keranjangs={keranjangs} />
+            <Hasil keranjangs={keranjangs} {...this.props} getListKeranjang={this.getListKeranjang} />
           </Row>
         </Container>
       </div>
